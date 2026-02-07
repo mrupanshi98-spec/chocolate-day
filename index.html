@@ -5,60 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chocolate Day Surprise 🍫</title>
 
+<!-- Pretty Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
 <style>
 
 body{
-    font-family: Arial;
-    background:#ffe6ea;
+    font-family:'Poppins',sans-serif;
+    margin:0;
     text-align:center;
     overflow-x:hidden;
+
+    /* Romantic gradient background */
+    background: linear-gradient(135deg,#ffd1dc,#ffe6ea,#fff0f5);
+}
+
+/* soft floating blur background */
+body::before{
+    content:"";
+    position:fixed;
+    width:400px;
+    height:400px;
+    background:#ff9ecb;
+    filter:blur(150px);
+    top:-100px;
+    left:-100px;
+    z-index:-1;
 }
 
 h1{
+    font-family:'Dancing Script',cursive;
+    font-size:42px;
     color:#d6336c;
+    margin-top:30px;
 }
 
+p{
+    font-size:18px;
+}
+
+/* main container card */
 .container{
     display:flex;
     justify-content:center;
     gap:30px;
     flex-wrap:wrap;
-    margin-top:30px;
+    margin:40px auto;
+    padding:30px;
+    width:fit-content;
+    border-radius:20px;
+
+    background:rgba(255,255,255,0.4);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
 /* chocolates */
 .chocolate{
-    width:80px;
+    width:90px;
     cursor:grab;
     transition:0.3s;
 }
 
 .chocolate:hover{
-    transform:scale(1.1);
+    transform:scale(1.15) rotate(5deg);
 }
 
 /* gift box */
 #giftbox{
     width:200px;
     height:200px;
-    border:3px dashed #d6336c;
+    border:3px dashed #ff4d88;
     border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:18px;
     background:white;
+    font-weight:600;
 }
 
 .message{
     margin-top:20px;
-    font-size:18px;
+    font-size:20px;
     color:#a61e4d;
 }
 
 #final{
     display:none;
-    font-size:24px;
+    font-size:26px;
     color:#ff0066;
     animation:pop 1s infinite alternate;
 }
@@ -78,14 +113,10 @@ h1{
 
 <div class="container">
 
-<img src="chocolate.png"
-class="chocolate" draggable="true">
-
-<img src="chocolate.png"
-class="chocolate" draggable="true">
-
-<img src="chocolate.png"
-class="chocolate" draggable="true">
+<img src="chocolate.png" class="chocolate" draggable="true">
+<img src="chocolate.png" class="chocolate" draggable="true">
+<img src="chocolate.png" class="chocolate" draggable="true">
+<img src="chocolate.png" class="chocolate" draggable="true">
 
 <div id="giftbox">Drop Here 🎁</div>
 
@@ -105,12 +136,12 @@ const final = document.getElementById("final");
 let count = 0;
 
 const sweetMessages = [
-"You are sweeter than chocolate 🍫",
-"Sending you virtual sweetness 😋",
+"Just like chocolate, you make everything better and sweeter 💕 Happy Chocolate Day! 🍫",
+"Life without you is like chocolate without sweetness — incomplete. 😋",
+"Chocolate is temporary, but my crush on you is permanent",
 "Chocolate + You = Perfect ❤️"
 ];
 
-// drag start
 chocolates.forEach((choco,index)=>{
 
 choco.addEventListener("dragstart",(e)=>{
@@ -119,12 +150,10 @@ choco.addEventListener("dragstart",(e)=>{
 
 });
 
-// allow drop
 giftbox.addEventListener("dragover",(e)=>{
     e.preventDefault();
 });
 
-// drop event
 giftbox.addEventListener("drop",(e)=>{
     e.preventDefault();
 
@@ -133,9 +162,7 @@ giftbox.addEventListener("drop",(e)=>{
 
     if(dragged.style.display !== "none"){
         dragged.style.display="none";
-
         message.innerHTML = sweetMessages[count];
-
         count++;
 
         if(count === chocolates.length){
