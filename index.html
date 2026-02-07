@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Day Surprise 🍫</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#ffe6ea;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+h1{
+    color:#d6336c;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+/* chocolates */
+.chocolate{
+    width:80px;
+    cursor:grab;
+    transition:0.3s;
+}
+
+.chocolate:hover{
+    transform:scale(1.1);
+}
+
+/* gift box */
+#giftbox{
+    width:200px;
+    height:200px;
+    border:3px dashed #d6336c;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    background:white;
+}
+
+.message{
+    margin-top:20px;
+    font-size:18px;
+    color:#a61e4d;
+}
+
+#final{
+    display:none;
+    font-size:24px;
+    color:#ff0066;
+    animation:pop 1s infinite alternate;
+}
+
+@keyframes pop{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🍫 Virtual Chocolate Gift For You</h1>
+<p>Drag chocolates into the gift box 😋</p>
+
+<div class="container">
+
+<img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+class="chocolate" draggable="true">
+
+<img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+class="chocolate" draggable="true">
+
+<img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+class="chocolate" draggable="true">
+
+<div id="giftbox">Drop Here 🎁</div>
+
+</div>
+
+<div class="message" id="msg"></div>
+
+<div id="final">💖 You collected all chocolates! Sweetest person ever! 💖</div>
+
+<script>
+
+const chocolates = document.querySelectorAll(".chocolate");
+const giftbox = document.getElementById("giftbox");
+const message = document.getElementById("msg");
+const final = document.getElementById("final");
+
+let count = 0;
+
+const sweetMessages = [
+"You are sweeter than chocolate 🍫",
+"Sending you virtual sweetness 😋",
+"Chocolate + You = Perfect ❤️"
+];
+
+// drag start
+chocolates.forEach((choco,index)=>{
+
+choco.addEventListener("dragstart",(e)=>{
+    e.dataTransfer.setData("text",index);
+});
+
+});
+
+// allow drop
+giftbox.addEventListener("dragover",(e)=>{
+    e.preventDefault();
+});
+
+// drop event
+giftbox.addEventListener("drop",(e)=>{
+    e.preventDefault();
+
+    const index = e.dataTransfer.getData("text");
+    const dragged = chocolates[index];
+
+    if(dragged.style.display !== "none"){
+        dragged.style.display="none";
+
+        message.innerHTML = sweetMessages[count];
+
+        count++;
+
+        if(count === chocolates.length){
+            final.style.display="block";
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
